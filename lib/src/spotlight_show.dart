@@ -156,14 +156,17 @@ class SpotlightShowState extends State<SpotlightShow> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        if (didPop) return;
+
         if (widget.skipWhenPop && isPerforming) {
           gaffer.currentState?.skip();
-          return false;
+          return;
         }
 
-        return true;
+        Navigator.of(context).pop();
       },
       child: _ShowScope(
         showState: this,
