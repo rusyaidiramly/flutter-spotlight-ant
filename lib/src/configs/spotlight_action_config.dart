@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:spotlight_ant/src/spotlight_ant.dart';
 
+typedef ActionBuilder = Widget Function(void Function() action);
+
 class SpotlightActionConfig {
   /// Ordering actions by [SpotlightAntAction].
   ///
@@ -17,50 +19,20 @@ class SpotlightActionConfig {
   ///   right: 16,
   ///   child: Row(
   ///     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  ///     children: actions.toList(),
+  ///     children: [prev, next, skip],
   ///   ),
   /// );
   /// ```
   final Widget Function(BuildContext context, Iterable<Widget> actions)? builder;
 
   /// Pressed the action widget will go to next spotlight.
-  ///
-  /// Default using:
-  /// ```dart
-  /// IconButton(
-  ///   onPressed: () => prev(),
-  ///   tooltip: 'Next spotlight',
-  ///   color: Colors.white,
-  ///   icon: const Icon(Icons.arrow_forward_ios_sharp),
-  /// );
-  /// ```
-  final Widget? next;
+  final ActionBuilder? next;
 
   /// Pressed the action widget will go to previous spotlight.
-  ///
-  /// Default using:
-  /// ```dart
-  /// IconButton(
-  ///   onPressed: () => prev(),
-  ///   tooltip: 'Previous spotlight',
-  ///   color: Colors.white,
-  ///   icon: const Icon(Icons.arrow_back_ios_sharp),
-  /// );
-  /// ```
-  final Widget? prev;
+  final ActionBuilder? prev;
 
   /// Pressed the action widget will skip all spotlights.
-  ///
-  /// Default using:
-  /// ```dart
-  /// IconButton(
-  ///   onPressed: () => skip(),
-  ///   tooltip: 'Skip spotlight show',
-  ///   color: Colors.white,
-  ///   icon: const Icon(Icons.close_sharp),
-  /// );
-  /// ```
-  final Widget? skip;
+  final ActionBuilder? skip;
 
   const SpotlightActionConfig({
     this.enabled = const [SpotlightAntAction.skip],
